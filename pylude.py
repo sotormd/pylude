@@ -123,3 +123,6 @@ assert Min ((4,5,4,4,2,3,4,5,1,0,2,3,1,2,-5)) == -5
 LocateN = lambda x: lambda n: lambda xs: If (Eq (xs) (Empty ())) (lambda: Subtract (Zero ()) (One ())) (lambda: If (Eq (Head (xs)) (x)) (lambda: n) (lambda: LocateN (x) (Step (n)) (Tail (xs))) ()) ()
 Locate = lambda x: lambda xs: LocateN (x) (Zero ()) (xs)
 assert Locate (3) ((1,2,3,4,5,6,7,3)) == 2
+
+# take while
+TakeWhile = lambda f: lambda xs: If (Eq (xs) (Empty ())) (Empty) (lambda: If (f (Head (xs))) (lambda: Join (Atom (Head (xs))) (TakeWhile (f) (Tail (xs)))) (Empty) ()) ();
