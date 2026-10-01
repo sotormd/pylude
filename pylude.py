@@ -120,9 +120,13 @@ assert Max ((1,2,3,4,5,4,3,2,1,6,3,2,1)) == 6
 assert Min ((4,5,4,4,2,3,4,5,1,0,2,3,1,2,-5)) == -5
 
 # locate
-LocateN = lambda x: lambda n: lambda xs: If (Eq (xs) (Empty ())) (lambda: Subtract (Zero ()) (One ())) (lambda: If (Eq (Head (xs)) (x)) (lambda: n) (lambda: LocateN (x) (Step (n)) (Tail (xs))) ()) ()
-Locate = lambda x: lambda xs: LocateN (x) (Zero ()) (xs)
+Locate_ = lambda x: lambda n: lambda xs: If (Eq (xs) (Empty ())) (lambda: Subtract (Zero ()) (One ())) (lambda: If (Eq (Head (xs)) (x)) (lambda: n) (lambda: Locate_ (x) (Step (n)) (Tail (xs))) ()) ()
+Locate = lambda x: lambda xs: Locate_ (x) (Zero ()) (xs)
 assert Locate (3) ((1,2,3,4,5,6,7,3)) == 2
 
 # take while
 TakeWhile = lambda f: lambda xs: If (Eq (xs) (Empty ())) (Empty) (lambda: If (f (Head (xs))) (lambda: Join (Atom (Head (xs))) (TakeWhile (f) (Tail (xs)))) (Empty) ()) ();
+
+# digits
+Digits_ = lambda acc: lambda x: If (Eq (x) (Zero ())) (lambda: acc) (lambda: Digits_ (Join (acc) (Atom (Modulo (x) (10)))) (FloorDivide (x) (10))) ()
+Digits = lambda x: Digits_ (Empty ()) (x)
