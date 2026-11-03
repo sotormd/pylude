@@ -128,5 +128,5 @@ assert Locate (3) ((1,2,3,4,5,6,7,3)) == 2
 TakeWhile = lambda f: lambda xs: If (Eq (xs) (Empty ())) (Empty) (lambda: If (f (Head (xs))) (lambda: Join (Atom (Head (xs))) (TakeWhile (f) (Tail (xs)))) (Empty) ()) ();
 
 # digits
-Digits_ = lambda acc: lambda x: If (Eq (x) (Zero ())) (lambda: acc) (lambda: Digits_ (Join (acc) (Atom (Modulo (x) (10)))) (FloorDivide (x) (10))) ()
+Digits_ = lambda acc: lambda x: If (Eq (x) (Zero ())) (lambda: acc) (lambda: Digits_ (Join (Atom (Modulo (x) (10))) (acc)) (FloorDivide (x) (10))) ()
 Digits = lambda x: Digits_ (Empty ()) (x)
